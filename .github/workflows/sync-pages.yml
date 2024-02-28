@@ -12,7 +12,7 @@ jobs:
             uses: actions/checkout@v4
             with:
               path: linglong
-              repository: linglong/linglong
+              repository: linuxdeepin/linglong
               sparse-checkout: |
                 docs/pages
               sparse-checkout-cone-mode: false
