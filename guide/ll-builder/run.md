@@ -4,44 +4,44 @@ SPDX-FileCopyrightText: 2023 UnionTech Software Technology Co., Ltd.
 SPDX-License-Identifier: LGPL-3.0-or-later
 -->
 
-# 运行编译后的应用
+# Run compiled App
 
-`ll-builder run`命令可以运行编译后的可执行程序。
+Use `ll-builder run` to run the compiled executable program.
 
-查看`ll-builder run`命令的帮助信息：
+View the help information for the `ll-builder run` command:
 
 ```bash
 ll-builder run --help
 ```
 
-`ll-builder run`命令的帮助信息如下：
+Here is the output:
 
 ```text
 Usage: ll-builder [options] run
 
 Options:
-  -v, --verbose  show detail log
-  -h, --help     Displays this help.
-  --exec <exec>  run exec than build script
+   -v, --verbose show detail log
+   -h, --help Displays this help.
+   --exec <exec> run exec than build script
 
 Arguments:
-  run            run project
+   run run project
 ```
 
-`ll-builder run`命令根据配置文件读取该程序相关的运行环境信息，构造一个容器环境，并在容器中执行该程序而无需安装。
+The `ll-builder run` command reads the operating system environment information related to the program according to the configuration file, constructs a container, and executes the program in the container without installation.
 
 ```bash
 ll-builder run
 ```
 
-`ll-builder run`运行成功输出如下：
+If `ll-builder run` runs successfully, the output is as follows:
 
 ![org.deepin.demo.png](./images/org.deepin.demo.png)
 
-为了便于调试，使用额外的`--exec /bin/bash`参数可替换进入容器后默认执行的程序，如：
+To facilitate debugging, use an additional `--exec /bin/bash` parameter to replace the default execution program after entering the container, such as:
 
 ```bash
 ll-builder run --exec /bin/bash
 ```
 
-使用该选项，`ll-builder`创建容器后将进入`bash`终端，可在容器内执行其他操作。
+With this option, `ll-builder` will enter the `bash` terminal after creating the container, and can perform other operations inside the container.

@@ -4,14 +4,14 @@ SPDX-FileCopyrightText: 2023 UnionTech Software Technology Co., Ltd.
 SPDX-License-Identifier: LGPL-3.0-or-later
 -->
 
-# 上架应用到商店
+# App to store
 
-## 主要流程
+## Main process
 
-- 创建一个玲珑工程，使用ll-builder在本地构建出玲珑应用。
+- Create a Linglong project and use ll-builder to build a Linglong app locally.
 
-- 将玲珑工程以pull request（PR）方式提交到[https://github.com/linuxdeepin/linglong-hub](https://github.com/linuxdeepin/linglong-hub)项目。
+- Submit a pull request to the [https://github.com/linuxdeepin/linglong-hub](https://github.com/linuxdeepin/linglong-hub) repository.
 
-- 项目维护者审核内容通过后，将触发构建流程，构建成功后内容将被提交到玲珑测试仓库。
+- After the project maintainer approves the content, the build process is triggered. After the build is successful, the content will be submitted to the test repository of linglong, and the GitHub action can obtain the build log and status.
 
-- 应用通过测试后将会合并PR，并将应用上架到[玲珑网页商店](https://store.linglong.dev)。
+- After the app test has passed, it will be put on the [Linglong Web Store](https://store.linglong.dev).

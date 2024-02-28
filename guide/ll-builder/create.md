@@ -4,47 +4,47 @@ SPDX-FileCopyrightText: 2023 UnionTech Software Technology Co., Ltd.
 SPDX-License-Identifier: LGPL-3.0-or-later
 -->
 
-# 创建项目
+# Create Linglong project
 
-`ll-builder create`命令用来创建玲珑项目。
+Use `ll-builder create` to create a Linglong project.
 
-查看`ll-builder create`命令的帮助信息：
+View the help information for the `ll-builder create` command:
 
 ```bash
 ll-builder create --help
 ```
 
-`ll-builder create`命令的帮助信息如下：
+Here is the output:
 
 ```text
 Usage: ll-builder [options] create <org.deepin.demo>
 
 Options:
-  -v, --verbose  show detail log
-  -h, --help     Displays help on commandline options.
-  --help-all     Displays help including Qt specific options.
+  -v, --verbose show detail log
+  -h, --help Displays help on commandline options.
+  --help-all Displays help including Qt specific options.
 
 Arguments:
-  create         create build template project
-  name           project name
+  create create build template project
+  name project name
 ```
 
-`ll-builder create`命令根据输入的项目名称在当前目录创建对应的文件夹，同时生成构建所需的`linglong.yaml`模板文件。示例如下：
+The `ll-builder create` command creates a folder in the current directory according to the project name, and generates the `linglong.yaml` template file required for the build. Here is an example:
 
 ```bash
 ll-builder create <org.deepin.demo>
 ```
 
-`ll-builder create org.deepin.demo`命令输出如下：
+Here is the output:
 
 ```text
 org.deepin.demo/
 └── linglong.yaml
 ```
 
-## 编辑linglong.yaml
+## Edit linglong.yaml
 
-### 软件包元信息配置
+### App meta info
 
 ```yaml
 package:
@@ -56,7 +56,7 @@ package:
     simple Qt demo.
 ```
 
-### 运行时
+### runtime
 
 ```yaml
 runtime:
@@ -64,7 +64,7 @@ runtime:
   version: 23.0.0
 ```
 
-### 依赖项
+### Dependencies
 
 ```yaml
 depends:
@@ -73,9 +73,9 @@ depends:
     type: runtime
 ```
 
-### 源码
+### Source
 
-使用git源码
+Use git source code
 
 ```yaml
 source:
@@ -84,18 +84,18 @@ source:
   commit: 24f78c8463d87ba12b0ac393ec56218240315a9
 ```
 
-### 选择构建模板
+### Build template
 
-源码为qmake工程，填写build 类型为qmake（模板内容见qmake.yaml）。
+The source code is a qmake project, and the build type is qmake (see qmake.yaml for the template content).
 
 ```yaml
 build:
   kind: qmake
 ```
 
-### 完整的linglong.yaml配置
+### Completed `linglong.yaml` config
 
-`linglong.yaml`文件内容如下：
+The contents of the `linglong.yaml` file are as follows:
 
 ```yaml
 package:
@@ -109,11 +109,6 @@ package:
 runtime:
   id: org.deepin.Runtime
   version: 23.0.0
-
-depends:
-  - id: icu
-    version: 63.1.0
-    type: runtime
 
 source:
   kind: git

@@ -4,17 +4,17 @@ SPDX-FileCopyrightText: 2023 UnionTech Software Technology Co., Ltd.
 SPDX-License-Identifier: LGPL-3.0-or-later
 -->
 
-# 安装应用
+# Install Linglong Apps
 
-`ll-cli install`命令用来安装玲珑应用。
+Use `ll-cli install` to install Linglong apps.
 
-查看`ll-cli install`命令的帮助信息：
+View the help information for the `ll-cli install` command:
 
 ```bash
 ll-cli install --help
 ```
 
-`ll-cli install`命令的帮助信息如下：
+Here is the output:
 
 ```text
 Usage: ll-cli [options] install com.deepin.demo
@@ -23,7 +23,7 @@ Options:
   -h, --help                           Displays help on commandline options.
   --help-all                           Displays help including Qt specific
                                        options.
-  --repo-point app                     repo type to use
+  --repo-point <--repo-point=flatpak>  app repo type to use
   --nodbus                             execute cmd directly, not via dbus(only
                                        for root user)
   --channel <--channel=linglong>       the channel of app
@@ -34,21 +34,21 @@ Arguments:
   appId                                application id
 ```
 
-运行`ll-cli install`命令安装玲珑应用:
+Example of the `ll-cli install` command to install a Linglong app:
 
 ```bash
 ll-cli install <org.deepin.calculator>
 ```
 
-`ll-cli install`命令需要输入应用完整的`appid`，若仓库有多个版本则会默认安装最高版本。
+Enter the complete `appid` after `ll-cli install`. If the repository has multiple versions, the highest version will be installed by default.
 
-安装指定版本需在`appid`后附加对应版本号:
+To install a specified version, append the corresponding version number after `appid`:
 
 ```bash
 ll-cli install <org.deepin.calculator/5.1.2>
 ```
 
-`ll-cli install org.deepin.calculator`输出如下：
+Here is the output of `ll-cli install org.deepin.calculator`:
 
 ```text
 install org.deepin.calculator , please wait a few minutes...
@@ -56,4 +56,4 @@ org.deepin.calculator is installing...
 message: install org.deepin.calculator, version:5.7.21.4 success
 ```
 
-应用安装完成后，客户端会显示安装结果信息。
+After the application is installed, the installation result will be displayed.

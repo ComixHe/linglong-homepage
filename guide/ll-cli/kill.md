@@ -4,17 +4,17 @@ SPDX-FileCopyrightText: 2023 UnionTech Software Technology Co., Ltd.
 SPDX-License-Identifier: LGPL-3.0-or-later
 -->
 
-# 强制退出应用
+# Force Quit Running App
 
-`ll-cli kill`命令可以强制退出正在运行的玲珑应用。
+Use `ll-cli kill` to force quit running Linglong apps.
 
-查看`ll-cli kill`命令的帮助信息：
+View the help information for the `ll-cli kill` command:
 
 ```bash
 ll-cli kill --help
 ```
 
-`ll-cli kill` 命令的帮助信息如下：
+Here is the output:
 
 ```text
 Usage: ll-cli [options] kill container-id
@@ -28,13 +28,13 @@ Arguments:
   container-id      container id
 ```
 
-使用 `ll-cli kill` 命令可以强制退出正在运行的玲珑应用:
+Example of the `ll-cli kill` command to force quit running Linglong apps:
 
 ```bash
 ll-cli kill <9c41c0af2bad4617aea8485f5aaeb93a>
 ```
 
-`ll-cli kill 9c41c0af2bad4617aea8485f5aaeb93a`命令输出如下：
+Here is the output:
 
 ```text
 kill app:org.deepin.calculator/5.7.21.4/x86_64 success

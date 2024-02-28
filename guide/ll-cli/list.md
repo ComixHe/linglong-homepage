@@ -4,17 +4,17 @@ SPDX-FileCopyrightText: 2023 UnionTech Software Technology Co., Ltd.
 SPDX-License-Identifier: LGPL-3.0-or-later
 -->
 
-# 列出已安装的应用
+# List Installed Apps
 
-`ll-cli list`命令可以查看已安装的玲珑应用。
+Use `ll-cli list` to view the installed Linglong apps.
 
-查看 `ll-cli list`命令的帮助信息：
+View the help information for the `ll-cli list` command:
 
 ```bash
 ll-cli list --help
 ```
 
-`ll-cli list`命令的帮助信息如下：
+Here is the output:
 
 ```text
 Usage: ll-cli [options] list
@@ -24,20 +24,20 @@ Options:
   --help-all                           Displays help including Qt specific
                                        options.
   --type <--type=installed>            query installed app
-  --repo-point                         app repo type to use
+  --repo-point <--repo-point=flatpak>  app repo type to use
   --nodbus                             execute cmd directly, not via dbus
 
 Arguments:
   list                                 show installed application
 ```
 
-查看已安装的`runtime` 和应用，运行 `ll-cli list`命令：
+To view the installed `runtime` and apps, run `ll-cli list`:
 
 ```bash
 ll-cli list
 ```
 
-`ll-cli list` 输出如下：
+Here is the output:
 
 ```text
 appId                           name                            version         arch        channel         module      description

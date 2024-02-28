@@ -4,52 +4,65 @@ SPDX-FileCopyrightText: 2023 UnionTech Software Technology Co., Ltd.
 SPDX-License-Identifier: LGPL-3.0-or-later
 -->
 
-# 安装玲珑环境
+# Install Linglong Environment
 
-## 内核版本
+## Kernel version requirement
 
-使用 `uname -r` 查看内核版本。
+Use `uname -r` to check the kernel version:
 
 ```bash
 uname -r
 ```
 
-输出如下：
+Here is the output:
 
 ```text
 5.10.101-amd64-desktop
 ```
 
-内核版本要求>=4.19。
+Kernel version requirement >=4.19.
 
-* x86架构4.19内核需要开启user namespace。
+* The 4.19 kernel of the x86 architecture needs to enable the user namespace.
 
-## deb包安装教程
-### deepin v23
+## Deb package installation tutorial
 
-deepin v23 已预装玲珑环境。
+### deepin 20
 
-### deb包下载
+Use `apt` to install the Linglong environment.
 
-### debian 11(bullseye)
+```bash
+sudo apt install linglong-builder \
+                 linglong-box \
+                 linglong-dbus-proxy \
+                 linglong-bin \
+                 linglong-installer
+```
 
-[点击下载debian 11(bullseye)玲珑deb包](https://github.com/linuxdeepin/linglong-hub/releases/download/1.3.3/debian_bullseye.tar.gz)
+### deepin 23
 
-### ubuntu 22.04(jammy)
+Deepin 23 comes preinstalled with the Linglong environment.
 
-[点击下载ubuntu 22.04(jammy)玲珑deb包](https://github.com/linuxdeepin/linglong-hub/releases/download/1.3.3/ubuntu_jammy.tar.gz)
+## Deb download
 
-### 更新仓库源
+### Debian 11 (bullseye)
 
-根据系统版本将对应的清华仓库源添加到源配置文件中。
+[Click here to download Debian 11 (bullseye) Linglong deb package](https://github.com/linuxdeepin/linglong-hub/releases/download/1.3.3/debian_bullseye.tar.gz)
 
-* [debian 添加清华仓库源教程](https://mirrors.tuna.tsinghua.edu.cn/help/debian/)
+### Ubuntu 22.04 (jammy)
 
-* [ubuntu 添加清华仓库源教程](https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/)
+[Click here to download Ubuntu 22.04 (jammy) Linglong deb package](https://github.com/linuxdeepin/linglong-hub/releases/download/1.3.3/ubuntu_jammy.tar.gz)
 
-### deb包安装
+### Update the repository source
 
-debian 11 安装示例如下：
+Add the Tsinghua warehouse source for your distro to your sources:
+
+* [Debian source](https://mirrors.tuna.tsinghua.edu.cn/help/debian/)
+
+* [Ubuntu source](https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/)
+
+### Deb install
+
+The Debian 11 installation is as follows:
 
 ```bash
 tar -zxvf debian_bullseye.tar.gz

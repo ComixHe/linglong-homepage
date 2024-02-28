@@ -4,28 +4,26 @@ SPDX-FileCopyrightText: 2023 UnionTech Software Technology Co., Ltd.
 SPDX-License-Identifier: LGPL-3.0-or-later
 -->
 
-# 常见构建问题
+# Build FAQ
 
-1. `cmake`类型构建，出现`-lxxx`失败，但`ldconfig`与`pkg-config`均能查询到该库信息。
+1. `-lxxx` failed in `cmake` type build, but `ldconfig` and `pkg-config` can query the library information.
 
-    链接库路径不在常规路径，新路径为`/runtime/lib`。
+   The link library path is not a regular path, the new path is `/runtime/lib`. Add the environment variable `LIBRARY_PATH=<libpath>`, which is included in the build environment by default.
 
-    添加环境变量 `LIBRARY_PATH=<libpath>`，目前构建环境已默认包含该环境变量。
+2. `link` static library failed when building, which requires re-build with `fPIC`.
 
-2. 构建时`link`静态库失败，要求重新使用`fPIC`构建。
+   Use the `-fPIC` parameter when building a static library.
 
-    构建静态库时使用`-fPIC`参数。
+3. Failed to start `box` during build, as shown below.
 
-3. 构建时启动`box`失败，如下图：
+   ![ll-box start failed](images/ll-box-start-failed.png)
 
-    ![ll-box启动失败](images/ll-box-start-failed.png)
+   The kernel does not support `unprivilege namespace`, please open `unprivilege namespace` to solve it.
 
-    内核不支持`unprivilege namespace`，开启`unprivilege namespace`解决。
+   ```bash
+   sudo sysctl -w kernel.unprivileged_userns_clone=1
+   ```
 
-    ```bash
-    sudo sysctl -w kernel.unprivileged_userns_clone=1
-    ```
+4. The build of `qtbase` is successful, but the `qt` application cannot be built, which prompts `module,mkspec` related errors.
 
-4. `qtbase`构建成功，但无法构建`qt`应用，提示`module,mkspec` 相关错误。
-
-    低版本`fuse-overlay mount`存在问题，导致`qtbase commit`时文件内容被污染 ，无法正常使用。使用`fuse-overlayfs >= 1.7`版本。
+   There is a problem in the lower version of `fuse-overlay mount`, which leads to the polluted file content when `qtbase commit`, and cannot be used. Use `fuse-overlayfs >= 1.8.2` version.

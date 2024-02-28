@@ -4,17 +4,17 @@ SPDX-FileCopyrightText: 2023 UnionTech Software Technology Co., Ltd.
 SPDX-License-Identifier: LGPL-3.0-or-later
 -->
 
-# 运行应用
+# Run App
 
-`ll-cli run`命令可以启动一个玲珑应用。
+Use `ll-cli run` command to start a Linglong application.
 
-查看 `ll-cli run`命令的帮助信息：
+See help for the `ll-cli run` command:
 
 ```bash
 ll-cli run --help
 ```
 
-`ll-cli run`命令的帮助信息如下：
+View the help information for the `ll-cli run` command:
 
 ```text
 Usage: ll-cli [options] run com.deepin.demo
@@ -40,38 +40,38 @@ Arguments:
   appId                                              application id
 ```
 
-当应用被正常安装后，使用`ll-cli run`命令即可启动：
+When the application is installed normally, use the `ll-cli run` command to start it:
 
 ```bash
 ll-cli run <org.deepin.calculator>
 ```
 
-默认情况下执行run命令会启动最高版本的应用，若需运行指定版本应用，需在`appid`后附加对应版本号：
+By default, executing the run command will start the application of the highest version. If you want to run the application of the specified version, you need to append the corresponding version number after `appid`:
 
 ```bash
 ll-cli run <org.deepin.calculator/5.7.21.4>
 ```
 
-默认情况下会使用`ll-dbus-proxy`拦截转发`dbus`消息，如果不想使用`ll-dbus-proxy`，可以使用`--no-proxy`参数：
+By default, `ll-dbus-proxy` is used to intercept and forward `dbus` messages. If you do not want to use `ll-dbus-proxy`, you can use the `--no-proxy` parameter:
 
 ```bash
 ll-cli run <org.deepin.calculator> --no-proxy
 ```
 
-使用 `ll-cli run`命令可以进入指定程序容器环境：
+Use the `ll-cli run` command to enter the specified program container:
 
 ```bash
 ll-cli run <org.deepin.calculator> --exec /bin/bash
 ```
 
-进入后可执行 `shell` 命令，如`gdb`、`strace`、`ls`、`find`等。
+After entering, execute `shell` commands, such as `gdb`, `strace`, `ls`, `find`, etc.
 
-由于玲珑应用都是在容器内运行，无法通过常规的方式直接调试，需要在容器内运行调试工具，如 `gdb`：
+Since Linglong applications run in the container, they cannot be directly debugged in the conventional way. You need to run debugging tools in the container, such as `gdb`:
 
 ```bash
 gdb /opt/apps/org.deepin.calculator/files/bin/deepin-calculator
 ```
 
-该路径为容器内应用程序的绝对路径。
+The path is the absolute path of the application in the container.
 
-玲珑应用`release`版本更多调试信息请参考：[常见运行问题](../debug/faq.md)。
+For more debugging information on Linglong application `release` version, please refer to: [Run FAQ](../debug/faq.md).

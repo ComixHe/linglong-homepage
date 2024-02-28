@@ -4,69 +4,53 @@ SPDX-FileCopyrightText: 2023 UnionTech Software Technology Co., Ltd.
 SPDX-License-Identifier: LGPL-3.0-or-later
 -->
 
-# 简介
+# Introduction
 
-玲珑是统信软件自研的开源软件包格式，用于替代 `deb`、`rpm`等包管理工具，实现了应用包管理、分发、容器、集成开发工具等功能。
+Linglong, an open source package format developed by UnionTech Software, is designed to manage, distribute, create a sandbox for packages, and integrate development tools, instead of using package management tools such as `deb` or `rpm`.
 
-## 当前包管理器存在的问题
+## Problems with current package management
 
-1. `deb`、`rpm`都属于强依赖型的包管理系统，同时允许各个组件之间有复杂的交叉依赖（或循环依赖）关系。这使得维护包管理系统需要极强的专业知识，稍有不慎，就会导致系统彻底故障，无法修复。
-2. 安装依赖和运行依赖耦合，多版本共存困难。`rpm`和 `deb`虽然提供了方案来解决多版本共存的问题，但是这些方案要求源码级别的改动，不具备实施的可行性。
-3. `Hook`系统设计复杂，没有限制，可以通过 `Hook`系统做很多破坏系统的操作。
-4. 可靠性不足，没有冗余的恢复设计，缺乏校验机制。一旦包管理系统故障，系统基本没有修复的可能性。
-5. `deb`、`rpm`权限管控松散，有较大的安全风险。
-6. 当前包更新不支持增量更新，对资源有较大浪费。
+1. Both `deb` and `rpm` are strongly-dependent package management systems and allow complex cross dependencies (or circular dependencies) between components, which makes maintenance a matter of great expertise. A little carelessness will lead to a complete system failure that cannot be repaired.
+2. Installation dependencies and running dependencies are coupled so that multiple versions can hardly coexist. Although `deb` and `rpm` have provided several solutions to solve the multi-version coexistence problem, these solutions require changes in source code and are infeasible.
+3. The `Hook` system is complex and has no restrictions, through which many operations can damage the system. 
+4. They have insufficient reliability, no redundant recovery design, and a lack of verification mechanisms. Once the package management system fails, the system can hardly be repaired.
+5. The permissions of `deb` and `rpm` are loosely controlled with big security risks.
+6. The current package updates do not support incremental updates, which is a great waste of resources.
 
-## 玲珑的优势
+## Linglong advantages
 
-1. 提升易用性，解决 `deb`、`rpm`依赖冲突问题。
-2. 加强安全防护，玲珑实现了应用权限管理机制。
-3. 支持应用增量更新。
+1. Improve usability and solve the dependency conflict problem of `deb` and `rpm`.
+2. Perform the application permission management mechanism to strengthen security.
+3. Support incremental updates of applications.
 
-## 对比
+## Comparison
 
-| 特性                      | 玲珑                            | Flatpak       | Snap             | AppImage                                |
+| Features              | Linglong                    | Flatpak       | Snap             | AppImage                                |
 | ------------------------- | ------------------------------- | ------------- | ---------------- | --------------------------------------- |
-| 打包桌面应用              | ✔                              | ✔            | ✔               | ✔                                      |
-| 打包终端应用              | ✔                              | ✔            | ✔               | ✔                                      |
-| 处理服务器应用            | ✔                              | ✘            | ✔               | ✘                                      |
-| 打包系统服务（root 权限） | ✘                              | ✘            | ✔               | ✘                                      |
-| 主题功能正常              | ✔                              | ✔            | ✔               | ✔                                      |
-| 提供库托管服务            | ✔                              | ✘            | ✘               | ✘                                      |
-| 库/依赖来源               | 包自身携带                      |               |                  |                                         |
-| 宿主系统                  | 包自身携带                      |               |                  |                                         |
-| SDK                       | 包自身携带                      |               |                  |                                         |
-| Snap Base                 |                                 |               |                  |                                         |
-| 商业支持                  | ✔                              | ✘            | ✔               | ✘                                      |
-| 应用商店数量              | 预计 3000+                      | 1400+         | 6600+            | 1300+                                   |
-| 开发工具支持              |                                 | GNOME Builder | electron-builder |                                         |
-| 容器支持                  | ✔                              | ✔            | ✔               | ◐ （官方不提供，技术上可行）           |
-| rootless 容器             | ✔                              | ✘            | ✘               | ✘                                      |
-| 不安装运行                | ✔ （提供 Bundle 模式）         | ✘            | ✘               | ✔                                      |
-| 不解压运行                | ✔ （提供 Bundle 模式）         | ✘            | ✔               | ✔                                      |
-| 自分发/绿色格式分发       | ◐ （技术可行，但是系统做限制） | ✘            | ✘               | ✔                                      |
-| 支持 Wine 应用运行        | ✔                              | ◐ （理论可行 | ◐ （理论可行）  | ◐ （使用 LD 修改 open 调用，兼容性差） |
-| 离线环境支持              | ✔                              | ✔            | ✔               | ✔                                      |
-| 权限管理                  | ✔                              | ✔            | ✔               | ✘                                      |
-| 中心仓库                  | repo.linglong.space                  | FlatHub       | Snap Store       | AppImageHub                             |
-| 多版本共存                | ✔                              | ✔            | ✔               | ✔                                      |
-| 点对点分发                | ✔                              | ✔            | ✔               | ✔                                      |
-| 应用升级                  | 仓库升级                        | 仓库升级      | 仓库升级         | 官方工具升级                            |
-
-```vue
-<template>
-  <div>ttttdddd</div>
-  <div>{{test}}</div>
-</template>
-<script>
-export default {
-  data() {
-    return {
-      test: 344
-    }
-  },
-  mounted(){
-    
-  }
-}
-</script>
+| Package desktop apps | ✔                              | ✔            | ✔               | ✔                                      |
+| Package terminal apps | ✔                              | ✔            | ✔               | ✔                                      |
+| Deal with server apps | ✔                              | ✘            | ✔               | ✘                                      |
+| Package system services (root access) | ✘                              | ✘            | ✔               | ✘                                      |
+| Normal themes | ✔                              | ✔            | ✔               | ✔                                      |
+| Library hosting services | ✔                              | ✘            | ✘               | ✘                                      |
+| Source of libraries/dependencies | In packages           |               |                  |                                         |
+| Host system      | In packages           |               |                  |                                         |
+| SDK                       | In packages           |               |                  |                                         |
+| snap base                 |                                 |               |                  |                                         |
+| Commercial support | ✔                              | ✘            | ✔               | ✘                                      |
+| Apps quantity | About 3000+                  | 1400+         | 6600+            | 1300+                                   |
+| Development tools |                                 | GNOME Builder | electron-builder |                                         |
+| GNOME Builder             | electron-builder                |               |                  |                                         |
+| Sandbox           | ✔                              | ✔            | ✔               | ◐ (Not officially available, but technically feasible) |
+| Rootless sandbox       | ✔                              | ✘            | ✘               | ✘                                      |
+| Run without installation | ✔ (Offer Bundle packages) | ✘            | ✘               | ✔                                      |
+| Run without decompression | ✔ (Offer Bundle packages) | ✘            | ✔               | ✔                                      |
+| Self-distribution/Green-format distribution | ◐ (Technically feasible, but system limits it) | ✘            | ✘               | ✔                                      |
+| Run Wine apps | ✔                              | ◐ (Theoretically possible) | ◐ (Theoretically possible) | ◐ (Use LD to modify open calls, with poor compatibility) |
+| Support offline environment | ✔                              | ✔            | ✔               | ✔                                      |
+| Permission management | ✔                              | ✔            | ✔               | ✘                                      |
+| Center repository | linglong.space                  | FlatHub       | Snap Store       | AppImageHub                             |
+|                           |                                 |               |                  |                                         |
+| Multi-version coexistence | ✔                              | ✔            | ✔               | ✔                                      |
+| Peer-to-peer distribution | ✔                              | ✔            | ✔               | ✔                                      |
+| App upgrades      | By repository                                  | By repository | By repository | By official tool |

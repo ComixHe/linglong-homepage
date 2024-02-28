@@ -4,55 +4,55 @@ SPDX-FileCopyrightText: 2023 UnionTech Software Technology Co., Ltd.
 SPDX-License-Identifier: LGPL-3.0-or-later
 -->
 
-# 构建应用
+# Build App
 
-`ll-builder build`命令用来构建玲珑应用。
+Use `ll-builder build` to build a Linglong application.
 
-查看`ll-builder build`命令的帮助信息：
+View the help information for the `ll-builder build` command:
 
 ```bash
 ll-builder build --help
 ```
 
-`ll-builder build`命令的帮助信息如下：
+Here is the output:
 
 ```text
 Usage: ll-builder [options] build
 
 Options:
-  -v, --verbose  show detail log
-  -h, --help     Displays help on commandline options.
-  --help-all     Displays help including Qt specific options.
-  --exec <exec>  run exec than build script
+  -v, --verbose show detail log
+  -h, --help Displays help on commandline options.
+  --help-all Displays help including Qt specific options.
+  --exec <exec> run exec than build script
 
 Arguments:
-  build          build project
+  build build project
 ```
 
-`ll-builder build`命令必须运行在工程的根目录，即`linglong.yaml`文件所在位置。
+The `ll-builder build` command must be run in the root directory of the project, where the `linglong.yaml` file is located.
 
-以玲珑项目`org.deepin.demo`为例，构建玲珑应用主要步骤如下：
+Taking the Linglong project `org.deepin.demo`, as an example, the main steps to build a Linglong application would be as follows:
 
-进入到`org.deepin.demo`项目工程目录：
+Go to the `org.deepin.demo` project directory:
 
 ```bash
 cd org.deepin.demo
 ```
 
-执行`ll-builder build`命令将开始构建玲珑应用:
+Execute the `ll-builder build` command to start building:
 
 ```bash
 ll-builder build
 ```
 
-构建完成后，构建内容将自动提交到本地`ostree`缓存中。导出构建内容见 `ll-builder export`。
+After the build is complete, the build content will be automatically committed to the local ostree cache. See `ll-builder export` for exporting build content.
 
-使用`--exec`参数可在构建脚本执行前进入玲珑容器：
+Use the `--exec` parameter to enter the Linglong container before the build script is executed:
 
 ```bash
 ll-builder build --exec /bin/bash
 ```
 
-进入容器后，可执行`shell`命令，如`gdb`、`strace` 等。
+After entering the container, you can execute `shell` commands, such as `gdb`, `strace`, etc.
 
-玲珑应用`debug`版本更多调试信息请参考：[DEBUG](../debug/debug.md)。
+For more debugging information of Linglong application `debug` version, please refer to: [Debug App](../debug/debug.md).

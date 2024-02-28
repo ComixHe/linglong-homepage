@@ -4,11 +4,11 @@ SPDX-FileCopyrightText: 2023 UnionTech Software Technology Co., Ltd.
 SPDX-License-Identifier: LGPL-3.0-or-later
 -->
 
-# 构建配置文件简介
+# Manifests
 
-`linglong.yaml` 是玲珑项目工程的描述文件，记录构建所需的相关信息。如构建产物的名称、版本、源码地址、构建依赖等。
+`linglong.yaml` is the description file of a Linglong project, which stores the relevant information required for building. Such as the name, version, source address, build dependencies, etc., of the build product.
 
-## 工程目录结构
+## Project directory structure
 
 ```bash
 {project-root}
@@ -22,9 +22,9 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         └── layers
 ```
 
-## 字段定义
+## Field definitions
 
-### 软件包元信息配置
+### App meta info
 
 ```yaml
 package:
@@ -36,16 +36,16 @@ package:
     calculator for deepin os.
 ```
 
-| name        | description                                                 |
-| ----------- | ----------------------------------------------------------- |
-| description | 构建产物的详细描述                                          |
-| id          | 构建产物的唯一名称                                          |
-| kind        | 构建产物的类型：app、runtime、lib，依次代表应用、运行时、库 |
-| version     | 构建产物的版本                                              |
+| name        | description                                                                                          |
+| ----------- | ---------------------------------------------------------------------------------------------------- |
+| description | Detailed description of the build product                                                            |
+| id          | Unique name of the build product                                                                     |
+| kind        | The type of build product: app, runtime, lib, representing application, library in turn |
+| version     | version of the build product                                                                         |
 
-### 运行时（runtime）
+### Runtime
 
-应用运行时依赖，同时也是构建依赖。
+Describes the build and run dependencies of the application.
 
 ```yaml
 runtime:
@@ -55,22 +55,22 @@ runtime:
   digest: 4d85525f09211381c77d2085c9c1057
 ```
 
-可简写为以下形式:
+The `id` can also be written to include the version as:
 
 ```text
 runtime:
-  id: org.deepin.Runtime/23.0.0
+  id: org.deepin.Runtime/20.5.0
 ```
 
-| name    | description                                             |
-| ------- | ------------------------------------------------------- |
-| id      | 运行时（runtime）的唯一名称                             |
-| version | 运行时（runtime）版本                                   |
-| digest  | （暂未使用, 该字段可用来绑定唯一版本的运行时） |
+| name    | description                                                                             |
+| ------- | --------------------------------------------------------------------------------------- |
+| id      | Unique name of the runtime                                                              |
+| version | Runtime version                                                                         |
+| digest  | (not used yet, this field can be used to bind a unique version of the runtime) |
 
-### 依赖项
+### Dependencies
 
-描述应用的构建依赖与运行依赖。
+Describes the build dependencies and runtime dependencies of the application.
 
 ```yaml
 depends:
@@ -86,15 +86,14 @@ depends:
     type: runtime
 ```
 
-| name    | description                                                 |
-| ------- | ----------------------------------------------------------- |
-| id      | 依赖的唯一名称                                              |
-| type    | 依赖的类型，类型为 runtime 的依赖，将会和构建内容一起被提交;未设置type时, 该依赖仅参与构建|
-| version | 依赖的版本                                                  |
-| digest  | （暂未使用，该字段可用来绑定唯一版本的依赖）                |
+| name    | description                                                                                          |
+| ------- | ---------------------------------------------------------------------------------------------------- |
+| id      | Unique name of the dependency                                                                        |
+| type    | The type of dependency, the type of runtime dependency, will be submitted with the build content |
+| version | Dependency version                                                                                    |
+| digest  | (not used yet, this field can be used to bind a unique version of the dependency)                    |
 
-ll-builder在项目构建时将从远程存储库拉取dpends下包含的依赖到本地。若远程存储库不存在该依赖或其无法满足要求, 
-可新增source与build内容, ll-builder将优先构建包含source与build类型的依赖并应用到项目构建中。
+`ll-builder` will pull dependencies from the remote repository to the local when the project is built. If the dependency does not exist in the remote repository or cannot meet the requirements, you can add source and build content, and `ll-builder` will build and apply this type of dependency first to the project build.
 
 ```yaml
 depends: 
@@ -109,9 +108,9 @@ depends:
       kind: autotools
 ```
 
-### 源码
+### Source
 
-描述源码信息。
+Describes the source information.
 
 ```yaml
 source:
@@ -119,23 +118,23 @@ source:
   url: https://github.com/linuxdeepin/deepin-calculator.git
   version: master
   commit: d7e207b4a71bbd97f7d818de5044228c1a6e2c92
-  patch: 
-    - patches/fix-install-prefix-path.patch
+  patch:
+    -patches/fix-install-prefix-path.patch
     - patches/fix-lib-install-path.patch
 ```
 
-| name    | description                             |
-| ------- | --------------------------------------- |
-| kind    | 源码类型，可选类型 local、archive、git  |
-| url     | 源码地址，类型为 archive、git 时填写    |
-| version | 源码分支版本，类型为 git 时填写         |
-| digest  | 归档文件的hash值，使用sha256算法加密，类型为archive时填写 |
-| commit  | 源码某次提交 hash 值，类型为 git 时填写 |
-| patch   | 源码补丁路径                            |
+| name    | description                                                          |
+| ------- | -------------------------------------------------------------------- |
+| kind    | Source code type, optional types local, archive, git                 |
+| url     | Source address, fill in when the type is archive or git              |
+| version | Source branch version, fill in when the type is git                  |
+| digest  | The Hash value of archive file encrypted using sha256 algorithm, fill in when the type is git          |
+| commit  | The hash value of a source code commit, fill in when the type is git |
+| patch   | Source patch path                                                    |
 
-### 构建规则
+### Build rules
 
-描述构建规则。
+Describes the build rules.
 
 ```yaml
 build:
@@ -152,27 +151,25 @@ build:
       make -j install
 ```
 
-
-
 ```yaml
 build:
   kind: autotools
-  manual: 
+  manual:
     configure: |
-      ./bootstrap.sh 
+      ./bootstrap.sh
 ```
 
-| name      | description                                                                      |
-| --------- | -------------------------------------------------------------------------------- |
-| build     | 构建时build规则                                                                  |
-| configure | 构建时configure规则                                                              |
-| install   | 构建时install规则                                                                |
-| kind      | 构建类型，可选类型 manual、autotools、cmake、qmake                               |
-| manual    | 构建规则，声明使用 manual 时，表示自定义规则，即对build、install、configure 重写 |
+| name      | description                                                                                               |
+| --------- | --------------------------------------------------------------------------------------------------------- |
+| build     | build rules at build time                                                                                 |
+| configure | build-time configure rules                                                                                |
+| install   | build-time install rules                                                                                  |
+| kind      | Build type, optional manual, autotools, cmake, qmake                                                      |
+| manual    | Build rules, when manual is declared, it means custom rules, that is, rewriting build, install, configure |
 
-### 变量
+### Variables
 
-描述构建可以使用的变量，配合build构建使用。
+Describes the variables that can be used by the build.
 
 ```yaml
 variables:
@@ -197,19 +194,19 @@ build:
       make DESTDIR=${dest_dir} install
 ```
 
-| name       | description                                                                               |
-| ---------- | ----------------------------------------------------------------------------------------- |
-| build_dir  | 内置变量之一，variables字段下自定义赋值，build字段下使用                                  |
-| dest_dir   | 同build_dir                                                                               |
-| conf_args  | 同build_dir                                                                               |
-| extra_args | 同build_dir                                                                               |
-| jobs       | 同build_dir                                                                               |
-| PREFIX     | 环境变量之一，可在variable、build字段下使用；提供构建时的安装路径                       |
-| TRIPLET    | 环境变量之一，可在variable、build字段下使用；提供包含架构信息的三元组，如x86_64-linux-gnu |
+| name       | description                                                                                                                                                             |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| build_dir  | Built-in variables, assigned in the variable field, used in the build field                                                                                             |
+| dest_dir   | Same as build_dir                                                                                                                                                       |
+| conf_args  | Same as build_dir                                                                                                                                                       |
+| extra_args | Same as build_dir                                                                                                                                                       |
+| jobs       | Same as build_dir                                                                                                                                                       |
+| PREFIX     | One of the environment variables, which can be used under the variable and build fields; provide the installation path when building                                    |
+| TRIPLET    | One of the environment variables, which can be used under the variable and build fields; provide a triple containing architecture information, such as x86_64-linux-gnu |
 
-## 完整示例
+## Complete example
 
-### 构建应用
+### Build app
 
 ```yaml
 package:
@@ -253,40 +250,40 @@ build:
   kind: cmake
 ```
 
-### 构建依赖库
+### Build dependencies
 
 ```yaml
 package:
-  id: libopenjp2
-  kind: lib
-  version: 2.4.0
+   id: libopenjp2
+   kind: lib
+   version: 2.4.0
 
 base:
-  id: org.deepin.base
-  version: 23.0.0
+   id: org.deepin.base
+   version: 23.0.0
 
 source:
-  kind: git
-  url: https://github.com/uclouvain/openjpeg
-  version: 2.4.0
-  commit: 37ac30ceff6640bbab502388c5e0fa0bff23f505
+   kind: git
+   url: https://github.com/uclouvain/openjpeg
+   version: 2.4.0
+   commit: 37ac30ceff6640bbab502388c5e0fa0bff23f505
 
 build:
-  kind: cmake
+   kind: cmake
 ```
 
-### 构建运行时
+### Build runtime
 
 ```yaml
 package:
-  id: org.deepin.Runtime
-  kind: runtime
-  version: 23.0.0
-  description: |
-    runtime of deepin
+   id: org.deepin.Runtime
+   kind: runtime
+   version: 23.0.0
+   description: |
+     runtime of deepin.
 
 base:
-  id: org.deepin.base/23.0.0
+   id: org.deepin.base/23.0.0
 
 depends:
   - id: qtbase/5.15.7
@@ -332,115 +329,115 @@ depends:
   - id: linglong-config/0.0.1.2
 
 build:
-  kind: manual
-  manual:
-    configure: |
-      echo skip configure
+   kind: manual
+   manual:
+     configure: |
+       echo skip configure
 ```
 
-package 类型为runtime时，将提交所有依赖内容。
+When the package type is runtime, all dependencies will be submitted.
 
-## 构建工具模板
+## Build tools template
 
-### automake类型构建模板
+### Automake type build template
 
-`autotools.yaml` 提供了通用的 `automake` 类型构建模板, 模板文件如下:
+`autotools.yaml` provides a generic `automake` type build template, the template file is as follows:
 
 ```yaml
 variables:
-  build_dir: build_dir
-  conf_args: |
-    --prefix=${PREFIX} \
-    --libdir=${PREFIX}/lib/${TRIPLET}
-  extra_args: |
-  dest_dir: |
-  jobs: -j${JOBS}
+   build_dir: build_dir
+   conf_args: |
+     --prefix=${PREFIX} \
+     --libdir=${PREFIX}/lib/${TRIPLET}
+   extra_args: |
+   dest_dir: |
+   jobs: -j${JOBS}
 
 build:
-  kind: autotools
-  manual:
-    configure: |
-      #autogon.sh, bootstrap.sh
-      autoreconf -ivf
-      ./configure ${conf_args} ${extra_args}
-    build: |
-      make ${jobs}
-    install: |
-      make ${jobs} DESTDIR=${dest_dir} install
+   kind: autotools
+   manual:
+     configure: |
+       #autogon.sh, bootstrap.sh
+       autoreconf -ivf
+       ./configure ${conf_args} ${extra_args}
+     build: |
+       make ${jobs}
+     install: |
+       make ${jobs} DESTDIR=${dest_dir} install
 ```
 
-使用方法：
+Build tool:
 
 ```yaml
 build:
-  kind: autotools
+   kind: autotools
 ```
 
-### qmake构建模板
+### qmake build template
 
-`qmake.yaml` 提供了通用的 `qmake` 构建模板, 模板文件如下:
-
-```yaml
-variables:
-  build_dir: build_dir
-  conf_args: |
-    PREFIX=${PREFIX} \
-    LIB_INSTALL_DIR=${PREFIX}/lib/${TRIPLET}
-  extra_args: |
-  dest_dir: |
-  jobs: -j${JOBS}
-
-build:
-  kind: qmake
-  manual :
-    configure: |
-      qmake -makefile ${conf_args} ${extra_args}
-    build: |
-      make ${jobs}
-    install: |
-      make ${jobs} DESTDIR=${dest_dir} install
-```
-
-使用方法：
-
-```yaml
-build:
-  kind: qmake
-```
-
-### cmake构建模板
-
-`cmake.yaml` 提供了通用的 `cmake` 构建模板, 模板文件如下:
+`qmake.yaml` provides a generic `qmake` build template, the template file is as follows:
 
 ```yaml
 variables:
-  build_dir: build_dir
-  conf_args: |
-    -DCMAKE_INSTALL_PREFIX=${PREFIX} \
-    -DCMAKE_INSTALL_LIBDIR=${PREFIX}/lib/${TRIPLET}
-  extra_args: |
-  dest_dir: |
-  jobs: -j${JOBS}
+   build_dir: build_dir
+   conf_args: |
+     PREFIX=${PREFIX} \
+     LIB_INSTALL_DIR=${PREFIX}/lib/${TRIPLET}
+   extra_args: |
+   dest_dir: |
+   jobs: -j${JOBS}
 
 build:
-  kind: cmake
-  manual :
-    configure: |
-      cmake -B ${build_dir} ${conf_args} ${extra_args}
-    build: |
-      cmake --build ${build_dir} -- ${jobs}
-    install: |
-      env DESTDIR=${dest_dir} cmake --build ${build_dir} --target install
+   kind: qmake
+   manual :
+     configure: |
+       qmake -makefile ${conf_args} ${extra_args}
+     build: |
+       make ${jobs}
+     install: |
+       make ${jobs} DESTDIR=${dest_dir} install
 ```
 
-使用方法：
+Build tool:
 
 ```yaml
 build:
-  kind: cmake
+   kind: qmake
 ```
 
-## runtime 23.0.0 包含依赖项
+### cmake build templates
+
+`cmake.yaml` provides a generic `cmake` build template, the template file is as follows:
+
+```yaml
+variables:
+   build_dir: build_dir
+   conf_args: |
+     -DCMAKE_INSTALL_PREFIX=${PREFIX} \
+     -DCMAKE_INSTALL_LIBDIR=${PREFIX}/lib/${TRIPLET}
+   extra_args: |
+   dest_dir: |
+   jobs: -j${JOBS}
+
+build:
+   kind: cmake
+   manual :
+     configure: |
+       cmake -B ${build_dir} ${conf_args} ${extra_args}
+     build: |
+       cmake --build ${build_dir} -- ${jobs}
+     install: |
+       env DESTDIR=${dest_dir} cmake --build ${build_dir} --target install
+```
+
+Build tool:
+
+```yaml
+build:
+   kind: cmake
+```
+
+## Runtime 23.0.0 includes these dependencies:
 
 | id                     | version   |
 | ---------------------- | --------- |
@@ -484,7 +481,7 @@ build:
 | spdlog                 | 1.10.0    |
 | fmtlib                 | 10.1.2    |
 
-## 其他可用依赖
+## Other available dependencies:
 
 | id                   | version    |
 | -------------------- | ---------- |

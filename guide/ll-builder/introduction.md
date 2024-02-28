@@ -4,24 +4,24 @@ SPDX-FileCopyrightText: 2023 UnionTech Software Technology Co., Ltd.
 SPDX-License-Identifier: LGPL-3.0-or-later
 -->
 
-# ll-builder简介
+# ll-builder Introduction
 
-`ll-builder`是为应用开发者提供的一款构建玲珑应用工具。
+`ll-builder` is a tool for developers for building Linglong applications.
 
-主要功能如下：
+The main functions are as follows:
 
-- 支持在独立容器内构建。
-<!-- - 定义了一套版本管理系统。 -->
-- 提供 sdk 开发套件列表。
-<!-- - 包含完整推送发布流程。 -->
+- Supports building in a standalone sandbox.
+<!-- - Defined a version management system. -->
+- Provides a list of software development kits.
+<!-- - Contains a complete release process. -->
 
-查看`ll-builder`命令的帮助信息：
+View the help information for the `ll-builder` command:
 
 ```bash
 ll-builder --help
 ```
 
-ll-builder 命令的帮助信息如下：
+Here is the output:
 
 ```text
 Usage: ll-builder [options] subcommand [sub-option]

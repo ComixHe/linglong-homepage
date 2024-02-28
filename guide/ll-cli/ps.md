@@ -4,17 +4,17 @@ SPDX-FileCopyrightText: 2023 UnionTech Software Technology Co., Ltd.
 SPDX-License-Identifier: LGPL-3.0-or-later
 -->
 
-# 查看运行中的应用
+# View Running Apps
 
-`ll-cli ps`命令可以查看正在运行的玲珑应用。
+Use `ll-cli ps` to view running Linglong Apps.
 
-查看`ll-cli ps`命令的帮助信息：
+View the help information for the `ll-cli ps` command:
 
 ```bash
 ll-cli ps --help
 ```
 
-`ll-cli ps` 命令的帮助信息如下：
+Here is the output:
 
 ```text
 Usage: ll-cli [options] ps
@@ -28,13 +28,13 @@ Arguments:
   ps                         show running applications
 ```
 
-查看正在运行的应用，运行`ll-cli ps`命令：
+Use `ll-cli ps` to view running Linglong Apps:
 
 ```bash
 ll-cli ps
 ```
 
-`ll-cli ps`命令输出如下：
+Here is the output of `ll-cli ps`:
 
 ```text
 App                                             ContainerID                         Pid     Path

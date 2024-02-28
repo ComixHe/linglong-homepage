@@ -4,76 +4,78 @@ SPDX-FileCopyrightText: 2023 UnionTech Software Technology Co., Ltd.
 SPDX-License-Identifier: LGPL-3.0-or-later
 -->
 
-# 常见运行问题
+# Run FAQ
 
-1. 应用运行读取`/usr/share`下应用安装资源文件，为什么读取失败？
+1. When the application runs to read the application installation resource file under `/usr/share`, why does the reading fail?
 
-   玲珑应用是在容器环境中运行，应用数据会挂载到`/opt/apps/<appid>`/下，`/usr/share`目录下只会存在系统数据，不会存在应用相关数据。因此直接读取`/usr/share`下会失败。建议处理：采用`XDG_DATA_DIRS`环境变量读取资源，`/opt/apps/<appid>/files/share`会存在在此环境变量搜索路径中。
+   Linglong applications run in a container, and the application data will be mounted to `/opt/apps/<appid>`/. Only system data will exist in the `/usr/share` directory, and there will be no application-related data. Therefore, reading directly from `/usr/share` will fail. Suggested processing: Use the `XDG_DATA_DIRS` environment variable to read resources, and `/opt/apps/<appid>/files/share` will exist in this environment variable search path.
 
-2. 应用运行时找不到字体库文件？为什么`deb`包安装时能读取到对应的字体库？
+2. The font library file cannot be found when the application is running. Why can the corresponding font library be read when the `deb` package is installed?
 
-   `deb`包安装时，会依赖带入对应的字体库文件。而玲珑包格式采用自给自足打包格式。除了基本的系统库，`runtime`里面提供的`qt`库与`dtk`库文件不用自己提供外，其他依赖数据文件，均需自己提供。建议对应的数据文件放入`files/share`下，采用环境变量`XDG_DATA_DIRS`读取路径。
+   When the `deb` package is installed, it will depend on the corresponding font library file. The Linglong package format adopts a self-sufficient packaging format. Except for the basic system library, `qt` library and `dtk` library files provided in `runtime`, do not need to be provided by yourself, other dependent data files need to be provided by yourself. It is recommended to put the corresponding data file under `files/share`, and use the environment variable `XDG_DATA_DIRS` to read the path.
 
-3. 玲珑应用`runtime`里面有什么？能不能往里面添加一些库文件进去？
+3. What is in the Linglong application `runtime`? Can you add some library files to it?
 
-   目前玲珑应用依赖的`runtime`里面提供的是`qt`库与`dtk`库。因`runtime`有严格的大小限制。目前不允许往`runtime`里面添加额外的库文件。
+   At present, the `runtime` that Linglong application depends on provides the `qt` library and the `dtk` library. Because `runtime` has a strict size limit, adding additional library files to `runtime` is currently not allowed.
 
-4. 应用在容器内运行，运行过程中能不能往容器任意路径下创建配置文件？
+4. The application runs in the container. Can a configuration file be created in any path of the container during the running process?
 
-   这是不允许的行为，容器内文件系统是只读文件系统，不允许随意路径下创建配置文件。
+   This is not allowed. The file system in the container is a read-only file system and configuration files are not allowed to be created under arbitrary paths.
 
-5. 应用数据保存到哪里？在容器外哪里能找到？
+5. Where is app data saved? Where can I find it outside the container?
 
-   因玲珑应用遵循互不干涉原则，`XDG_DATA_HOME`、`XDG_CONFIG_HOME`、`XDG_CACHE_HOME`环境变量被定义到宿主机`~/.linglong/<appid>`/对应的路径下，因此用户应用数据会保存在此路径下，应用运行过程中写入数据时，也应该读取对应的环境变量写入数据。禁止应用间互相配置调用。
+   Because Linglong applications follow the principle of non-interference, the `XDG_DATA_HOME`, `XDG_CONFIG_HOME`, `XDG_CACHE_HOME` environment variables are defined in the corresponding path of the host machine, `~/.linglong/<appid>`/. So the user application data will be saved under this path. When writing data while the application is running, it should also be able to read the corresponding environment variable to write the data. Mutual configuration calls between applications are prohibited.
 
-6. 应用提供了`dbus service`文件，如何放置？`Exec`段写什么？
+6. The application provides the `dbus service` file, where do I place it? What does the `Exec` segment write?
 
-   应用提供`dbus service`文件时，需要放到`entries/dbus-1/services`目录下，如果`Exec`执行玲珑包内二进制，使用`--exec`选项参数执行对应的二进制。
+   When the application provides the `dbus service` file, it needs to be placed in the `entries/dbus-1/services` directory. If `Exec` executes the binary in the Linglong package, use the `--exec` option parameter to execute the corresponding binary.
 
-7. 应用能不能默认往`$HOME`目录下下载文件？下载了文件，为什么宿主机器下找不到？
+7. Can the application download files to the `$HOME` directory by default? I downloaded the file, why can't I find it on the host machine?
 
-   玲珑规范，不允许往`$HOME`目录下创建文件与目录。
+   Linglong specification does not allow files and directories to be created in the `$HOME` directory.
 
-8. 桌面快捷方式为什么显示齿轮状？或者为空？图标文件如何放置？
+8. Why does the desktop shortcut icon appear as a gear or blank? How are the icon files placed?
 
-    显示齿轮状是图标未获取到，需要确认`Icon`路径名称是否正确。图标为空时，是存在 `tryExec`字段，当命令不存在时，会导致快捷方式显示异常。放置应用图标`icons`，目录结构与系统`icons`目录结构保持一致即可，建议路径为`icons/hicolor/scalable/apps/org.desktopspec.demo.svg`，使用`svg`格式图标。参考图标文件格式规范如果使用非矢量格式，请按照分辨率来放置图标，注意`desktop`文件不要写死图标路径，直接写图标名即可。
+    If the gear shaped icon is displayed, the icon has not been obtained. You need to confirm whether the `Icon` path name is correct. When the icon is empty, the `tryExec` field exists. When the command does not exist, it will cause the shortcut to display improperly. Place the application icon in the `icons` directory. The directory structure should be consistent with the system `icons` directory structure. The recommended path is `icons/hicolor/scalable/apps/org.desktopspec.demo.svg`. Use `svg` format icons. Refer to the icon file format specification. If you use a non-vector format, please place the icon according to the resolution. Note that the `desktop` file should not write the icon path, but directly write the icon name.
 
-9. 应用自带的`xdg-open`、`xdg-email`为什么失效？
+9. Why do `xdg-open` and `xdg-email` that come with the application fail?
 
-    `runtime`中玲珑特殊处理了`xdg-open`、`xdg-email`，因此应用禁止执行自己携带的xdg-open、xdg-email可执行文件或者脚本。
+    Linglong specially handles `xdg-open` and `xdg-email` in `runtime`, so the application is forbidden to execute the executable file or script of `xdg-open` and `xdg-email` that it carries.
 
-10. 应用使用系统环境变量未生效，为什么？
+10. Why doesn't the system environment variable used by the application take effect?
 
-    当使用环境变量时，需要确认容器内是否存在对应的环境变量，如果没有，需要联系玲珑团队处理。
+    When using environment variables, you need to confirm whether there are corresponding environment variables in the container. If not, you need to contact the Linglong team for processing.
 
-11. 应用运行需要的库文件没找到，如何提供？
+11. The library files required for the application to run were not found. How can I provide them?
 
-    应用需要使用的资源文件，与库文件需要应用自身提供。库文件放到`files/lib`路径下。
+    The resource files that the application needs to use and the library files both need to be provided by the application itself. The library files are placed in the `files/lib` path.
 
-12. 应用下载目录可以选择哪里？
+12. Where can I choose the application download directory?
 
-    目前玲珑用户下载目录只能选择用户主目录下`Desktop`、`Documents`、`Downloads`、`Music`、`Pictures`、`Videos`、`Public`、`Templates` 目录，不能下载到其他目录。
+    Currently Linglong users can only choose the `Desktop`, `Documents`, `Downloads`, `Music`, `Pictures`, `Videos`, `Public`, and `Templates` directories under the user's home directory, and cannot be downloaded to other directories.
 
-13. 应用运行时，为什么`QT WebEngine`渲染进程已崩溃？
+13. Why has the `QTWebEngine` rendering process crashed when the application is running?
 
-    因系统升级了`glibc`，导致应用使用内置浏览器时失败，需要应用重新适配。临时解决方案是设置环境变量：`export QTWEBENGINE_DISABLE_SANDBOX=1`。
+    Due to the system upgrade of `glibc`, the application fails to use the built-in browser, and the application needs to be re-adapted. A temporary solution is to set the environment variable: `export QTWEBENGINE_DISABLE_container=1`.
 
-14. 应用运行时，找不到`libqxcb.so`库或者`qtwebengin` 报错？
+14. When the application is running, the `libqxcb.so` library cannot be found or the `qtwebengine` error is reported. What can I do?
 
-    存在`qt.conf`文件时，在文件中配置正确路径，或者使用 `QTWEBENGINEPROCESS_PATH`、`QTWEBENGINERESOURCE_PATH`、`QT_QPA_PLATFORM_PLUGIN_PATH`、`QT_PLUGIN_PATH`环境变量配置搜索路径。
+    When a `qt.conf` file exists, you need to configure the correct path in the file or use the `QTWEBENGINEPROCESS_PATH`, `QTWEBENGINERESOURCE_PATH`, `QT_QPA_PLATFORM_PLUGIN_PATH`, and `QT_PLUGIN_PATH` environment variables to configure the search path.
 
-15. 应用运行报错信息`gpu_data_manager_impl_private`，如何解决？
+15. The application running error message `gpu_data_manager_impl_private`, how can I solve it?
 
-    目前临时解决方案是加`--no-sandbox`，参考：[https://github.com/Automattic/simplenote-electron/issues/3044](https://github.com/Automattic/simplenote-electron/issues/3044)。
+    The current temporary solution is to add `--no-container`.
 
-16. 应用能否自己携带数据库文件，并在运行中往数据库中写入数据？
+    Reference: <https://github.com/Automattic/simplenote-electron/issues/3044>
 
-    容器内文件系统是只读文件系统，不允许往应用资源文件中写入数据。
+16. Can the application carry the database file by itself and write data to the database during operation?
 
-17. 为什么执行携带`suid`、`guid`权限二进制失效？
+    The file system in the container is a read-only file system and does not allow data to be written to application resource files.
 
-    玲珑容器为保证系统安全，容器内禁止执行此类权限二进制。
+17. Why does the execution of binary with `suid` and `guid` permissions fail?
 
-18. uab离线包格式在debian、ubuntu下输入法无法使用？
+    In order to ensure system security, Linglong container prohibits the execution of such permission binaries in the container.
 
-    建议安装`fictx`输入法后体验。
+18. Can the input method of uab offline package format not be used under Debian and Ubuntu?
+
+    It is recommended to install the `fictx` input method to experience it.

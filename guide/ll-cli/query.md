@@ -4,17 +4,17 @@ SPDX-FileCopyrightText: 2023 UnionTech Software Technology Co., Ltd.
 SPDX-License-Identifier: LGPL-3.0-or-later
 -->
 
-# 从远程仓库查询应用
+# Query Apps From Remote
 
-`ll-cli query`命令可以查询玲珑远程仓库中的应用信息。
+Use `ll-cli query` to search app meta info from remote repository.
 
-查看`ll-cli query`命令的帮助信息：
+View the help information for the `ll-cli query` command:
 
 ```bash
 ll-cli query --help
 ```
 
-`ll-cli query`命令的帮助信息如下：
+Here is the output:
 
 ```text
 Usage: ll-cli [options] query com.deepin.demo
@@ -23,7 +23,7 @@ Options:
   -h, --help                           Displays help on commandline options.
   --help-all                           Displays help including Qt specific
                                        options.
-  --repo-point                         app repo type to use
+  --repo-point <--repo-point=flatpak>  app repo type to use
   --force                              query from server directly, not from
                                        cache
 
@@ -32,25 +32,24 @@ Arguments:
   appId                                application id
 ```
 
-通过`ll-cli query`命令可以从远程 repo 中查找应用程序信息:
+Use `ll-cli query` to search app meta info from remote repository and local cache:
 
 ```bash
 ll-cli query <calculator>
 ```
 
-加上`--force`可以强制从远程 `repo` 中查询应用信息:
+Add `--force` to force search app info from remote repository:
 
 ```bash
 ll-cli query <calculator> --force
 ```
 
-该命令将返回`appid`(appid 是应用唯一标识) 中包含 calculator 关键词的所有应用程序信息，包含完整的`appid`、应用程序名称、版本、平台及应用描述信息。
+This command returns the info of all apps whose `appid` (appid is the app's unique identifier) contains the keyword "calculator", including the complete `appid`, application name, version, CPU architecture and descriptions.
 
-`ll-cli query calculator --force`输出如下：
+Here is the output:
 
 ```text
 appId                           name                            version         arch        channel         module      description
 org.deepin.calculator           deepin-calculator               5.5.23          x86_64      linglong        runtime     Calculator for UOS
 org.deepin.calculator           deepin-calculator               5.7.1           x86_64      linglong        runtime     Calculator for UOS
-
 ```

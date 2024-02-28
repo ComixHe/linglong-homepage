@@ -4,17 +4,17 @@ SPDX-FileCopyrightText: 2023 UnionTech Software Technology Co., Ltd.
 SPDX-License-Identifier: LGPL-3.0-or-later
 -->
 
-# 导出uab格式应用
+# Export Uab Format
 
-`ll-builder export`命令用来检出构建内容, 生成`bundle`格式软件包（简称 uab）。
+Use `ll-builder export` to check out the build content and generate the `bundle` format package (referred to as uab).
 
-查看`ll-builder export`命令的帮助信息：
+View the help information for the `ll-builder export` command:
 
 ```bash
 ll-builder export --help
 ```
 
-`ll-builder export`命令的帮助信息如下：
+Here is the output:
 
 ```text
 Usage: ll-builder [options] export [filename]
@@ -29,21 +29,23 @@ Arguments:
                  bundle
 ```
 
-`ll-builder export`命令在工程根目录下创建以`appid`为名称的目录，并将本地构建缓存检出到该目录。同时根据该构建结果制作出`bundle`格式软件包。
+The `ll-builder export` command creates a directory named `appid` in the project root directory, then checks out the local build cache to this directory, and produces a `bundle` format package according to the build result.
 
-`ll-builder export`命令使用示例如下：
+An example of the `ll-builder export` command is as follows:
 
 ```bash
 ll-builder export
 ```
 
-检出后的目录结构如下：
+The directory structure after checkout is as follows:
 
 ```text
 org.deepin.demo linglong.yaml org.deepin.demo_0.0.1_x86_64.uab
 ```
 
-以`org.deepin.demo`玲珑应用为例，目录如下：
+Linglong applications have two package formats: `linglong` and `uab`. Currently the `linglong` package format is the main one.
+
+Take the `org.deepin.demo` Linglong application as an example. The directory is as follows:
 
 ```text
 org.deepin.demo
